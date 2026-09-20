@@ -9,63 +9,56 @@ Play Console → 스토어 등록정보 → **번역 관리 → 직접 번역 �
 
 ### App name
 ```
-Photo Calendar - Photos in Month
+Ghost Leg - Ladder Lottery Picker
 ```
 
 ### Short description
 ```
-A calendar that shows your photos right on the month view. Events, to-dos, notes & photos.
+Type names and outcomes, climb the ladder. Pick a winner, a loser, turn order or penalties fairly.
 ```
 
 ### Full description
 ```
-📸 A calendar that shows your photos on the month view
+🪜 Who gets picked? Let the ladder decide
 
-Photo Calendar puts your photos right inside the day cells.
-No more tapping every single date to see what you saved — open a month and your memories are all there.
+Ghost Leg (Amidakuji / ladder lottery) is the simplest way to make a fair random pick.
+Who buys coffee, who does the dishes, who presents first, who takes the penalty — leave it to the ladder.
 
 ✨ Features
 
-• Photos on the month view
-  Days with photos show a preview directly in the calendar grid.
+• 2–10 players
+  Set the number of players with +/- and type their names. Names are remembered for next time.
 
-• Choose how many photos per day
-  - One photo: the day cell is filled with a single photo.
-  - Up to 4: photos shrink so four fit in one cell.
-  - All photos: photos keep their size and the cell grows taller. Just scroll.
+• Outcome presets
+  - 1 winner: one WIN, everyone else LOSE
+  - 1 loser: only one LOSE
+  - Ranking: #1 to #N
+  - Custom: penalties, roles, menus — anything
 
-• Events, to-dos, notes and photos
-  Timed events, checkable to-dos, free-form notes and photos — all on any date.
+• Animated climb
+  Tap a name at the top and a colored line climbs down the ladder to its outcome.
+  Choose slow, normal or fast in Settings.
 
-• Day view
-  See everything for a day on one screen, and add or edit right there.
+• Hidden outcomes
+  Outcomes below the ladder stay hidden as ? until someone arrives. Tap the eye icon to peek.
 
-• Full-screen photo viewer
-  Swipe between photos, pinch to zoom, or move a photo to another date.
+• Run all
+  One button runs every player in turn.
 
-• Your own colors
-  Pick a background and text color for each event, to-do and note.
+• Shuffle
+  Regenerates the rungs at random. Every pair of neighboring lines always gets at least one rung, so results never get stuck on one side.
 
-• Search
-  Search by keyword, or by photo: pick a photo from your gallery and the app finds the matching photo in your calendar.
-
-• Jump to any date
-  Tap the title and type a date to go straight there.
-
-• Korean public holidays
-  Shown in red with their names (can be turned off in Settings).
-
-• Week starts on Sunday or Monday
+• Result summary & copy
+  See name → outcome at a glance and copy it as text to paste into your group chat.
 
 🔒 Private by design
 
-No account, no login.
-Your events, notes and photos stay on your phone and are never sent to any server.
-Photos are added with the system photo picker, so the app never asks for access to your whole photo library.
+No account, no login. Names and outcomes are stored only on your phone.
+The app asks for no permissions other than Internet.
 
 🎨 Clean design
 
-Bright blue theme with dark mode. Available in English, Korean, Japanese and Simplified Chinese.
+Teal theme with dark mode. Available in English, Korean, Japanese and Simplified Chinese.
 
 ---
 This app contains ads (a bottom banner and one interstitial per day).
@@ -77,133 +70,118 @@ This app contains ads (a bottom banner and one interstitial per day).
 
 ### アプリ名
 ```
-フォトカレンダー - 写真が見える月表示
+あみだくじ - 当たり・順番・罰ゲーム決め
 ```
 
-### 簡単な説明
+### 短い説明
 ```
-日付をタップしなくても月表示に写真がそのまま見えるカレンダー。予定・やること・メモ・写真を一か所に。
+名前と結果を入れてあみだをたどるだけ。当たり・はずれ・順番・罰ゲームを公平に決めます。
 ```
 
 ### 詳しい説明
 ```
-📸 月表示に写真がそのまま見えるカレンダー
+🪜 誰が当たる? あみだくじで決めよう
 
-「フォトカレンダー」は、日付のマスの中に写真がそのまま表示されるカレンダーです。
-写真を見るために日付を一つずつタップする必要はありません。
-月を開けば、その月の思い出がひと目で分かります。
+「あみだくじ」は、参加者と結果を入力してあみだをたどるだけの、いちばんシンプルなくじ引きアプリです。
+コーヒーを買う人、皿洗い当番、発表の順番、飲み会の罰ゲーム…迷ったらあみだに任せましょう。
 
 ✨ 主な機能
 
-• 写真が見える月表示
-  写真を入れた日は、月表示にプレビューがそのまま表示されます。
+• 2〜10人
+  人数を +/- で決めて名前を入力。名前は次回も覚えています。
 
-• 1日あたりの写真枚数を選択
-  - 1枚のみ：日付マスを1枚の写真で埋めます。
-  - 最大4枚：写真が小さくなり、1マスに4枚まで入ります。
-  - すべての写真：写真の大きさは変えず、マスが縦に伸びます。スクロールしてご覧ください。
+• 結果プリセット
+  - 当たり1つ: 1人だけ当たり、残りははずれ
+  - はずれ1つ: 1人だけはずれ
+  - 順位: 1位〜N位
+  - 自由入力: 罰ゲーム・役割・メニュー、何でも
 
-• 予定・やること・メモ・写真
-  時間付きの予定、チェックできるやること、自由なメモ、そして写真を日付ごとに記録できます。
+• たどるアニメーション
+  上の名前をタップすると色の線があみだを下りて結果に到着します。
+  速さは設定でゆっくり・ふつう・速く。
 
-• 1日の詳細画面
-  その日の写真・予定・やること・メモを1画面で確認し、その場で追加・編集できます。
+• 結果は隠したまま
+  下の結果は到着するまで ? で隠れます。目のアイコンで先に見ることもできます。
 
-• 写真を大きく表示
-  スワイプで切り替え、ピンチで拡大、別の日付への移動もできます。
+• 全員たどる
+  ボタン1つで全員が順番にたどります。
 
-• 自分だけの色
-  予定・やること・メモごとに背景色と文字色を選べます。
+• 引き直す
+  横線をランダムに作り直します。隣り合う線には必ず横線が1本以上あるので、結果が偏りません。
 
-• 検索
-  キーワードでも、写真でも検索できます。ギャラリーの写真を選ぶと、カレンダー内の同じ写真を探してその日へ。
-
-• 日付へすぐ移動
-  タイトルをタップして日付を入力すると、その月・その日へ移動します。
-
-• 韓国の祝日表示
-  祝日を赤色で名前と一緒に表示（設定でオフにできます）。
-
-• 週の始まりを選択（日曜日 / 月曜日）
+• 結果一覧・コピー
+  名前 → 結果を一覧で確認し、テキストとしてコピーしてグループチャットに貼り付けられます。
 
 🔒 プライバシーも安心
 
-会員登録もログインも不要です。
-記録した予定・メモ・写真はすべて端末内にのみ保存され、サーバーには送信されません。
-写真はシステムの写真選択機能で選んだものだけがアプリにコピーされるため、写真ライブラリ全体へのアクセス権限は求めません。
+会員登録もログインもありません。入力した名前と結果は端末内にのみ保存されます。
+インターネット以外の権限は要求しません。
 
-🎨 すっきりしたデザイン
+🎨 すっきりデザイン
 
-ダークモード対応の明るいブルーのテーマ。日本語・英語・韓国語・中国語（簡体字）に対応。
+ダークモード対応のティール系テーマ。日本語・韓国語・英語・中国語(簡体字)に対応。
 
 ---
-※ このアプリには広告が含まれています（下部バナー、全画面広告は1日1回）。
+※ このアプリには広告が含まれます(下部バナー、全画面広告は1日1回)。
 ```
 
 ---
 
-## 简体中文 (zh-CN)
+## 中文（简体）(zh-CN)
 
 ### 应用名称
 ```
-照片日历 - 月视图直接看照片
+画鬼脚 - 抽签·排序·惩罚决定器
 ```
 
 ### 简短说明
 ```
-无需点击日期，月视图上直接显示照片的日历。日程、待办、备忘、照片一站记录。
+输入名字和结果，沿线走到底。中奖、淘汰、顺序、惩罚，公平决定，无需登录。
 ```
 
 ### 完整说明
 ```
-📸 月视图上直接显示照片的日历
+🪜 谁会中？让鬼脚图来决定
 
-「照片日历」把照片直接显示在日期格里。
-不必再逐个点开日期查看照片——翻开一个月，当月的回忆一目了然。
+「画鬼脚」（阿弥陀签）是最简单的公平抽签应用：输入参与者和结果，沿着线走到底就行。
+谁买咖啡、谁洗碗、谁先发言、谁接受惩罚……拿不定主意就交给鬼脚图。
 
 ✨ 主要功能
 
-• 月视图显示照片
-  添加了照片的日期，会直接在日历格中显示预览。
+• 2～10人
+  用 +/- 设定人数并输入名字。名字会自动记住，下次无需重输。
 
-• 选择每天显示的照片数量
-  - 仅1张：用一张照片填满日期格。
-  - 最多4张：照片缩小，一格最多放4张。
-  - 全部照片：照片大小不变，日期格向下拉长，滚动查看。
+• 结果预设
+  - 1个中奖：只有一人中奖，其余淘汰
+  - 1个淘汰：只有一人淘汰
+  - 排名：第1名～第N名
+  - 自定义：惩罚、角色、菜单，什么都行
 
-• 日程 · 待办 · 备忘 · 照片
-  带时间的日程、可勾选的待办、自由书写的备忘，以及照片，都可以按日期记录。
+• 走线动画
+  点击上方名字，彩色线条会沿着鬼脚图一路走到结果。
+  速度可在设置中选择慢、普通、快。
 
-• 当日详情页
-  一屏查看当天的照片、日程、待办、备忘，并可直接添加、修改。
+• 隐藏结果
+  下方结果在有人到达前以 ? 隐藏，点击眼睛图标可提前查看。
 
-• 大图查看
-  左右滑动切换，双指缩放，还可以移动到其他日期。
+• 全部走完
+  一键让所有人依次走线。
 
-• 自定义颜色
-  为每条日程、待办、备忘选择背景色和文字颜色。
+• 重新打乱
+  随机重新生成横线。相邻两条竖线之间至少有一条横线，结果不会偏向一边。
 
-• 搜索
-  按关键词或按照片搜索。从相册选一张照片，应用会在日历中找到相同的照片并带你到那一天。
-
-• 快速跳转日期
-  点击标题并输入日期，直接跳转到那个月、那一天。
-
-• 韩国公休日显示
-  以红色显示公休日及其名称（可在设置中关闭）。
-
-• 每周开始于周日或周一
+• 结果汇总·复制
+  一目了然地查看 名字 → 结果，并以文本复制，直接粘贴到群聊。
 
 🔒 隐私无忧
 
-无需注册，无需登录。
-记录的日程、备忘、照片全部只保存在手机中，不会上传到任何服务器。
-照片通过系统照片选择器挑选后才复制到应用中，因此不需要访问整个相册的权限。
+无需注册或登录。输入的名字和结果仅保存在手机本地。
+除网络外不申请任何权限。
 
 🎨 简洁设计
 
-支持深色模式的明亮蓝色主题。支持简体中文、英语、韩语、日语。
+支持深色模式的青绿色主题。支持简体中文、韩语、英语、日语。
 
 ---
-※ 本应用包含广告（底部横幅，插页广告每天最多1次）。
+※ 本应用包含广告（底部横幅，插页广告每天最多 1 次）。
 ```

@@ -14,10 +14,10 @@ RAW = os.path.join(STORE, "raw")
 SHOTS = os.path.join(STORE, "screenshots")
 os.makedirs(SHOTS, exist_ok=True)
 
-TOP = (66, 165, 245)
-BOTTOM = (21, 101, 192)
+TOP = (38, 166, 154)
+BOTTOM = (0, 105, 92)
 WHITE = (255, 255, 255)
-LIGHT = (227, 240, 255)
+LIGHT = (224, 242, 238)
 
 FONT_BOLD = r"C:\Windows\Fonts\malgunbd.ttf"
 FONT_REG = r"C:\Windows\Fonts\malgun.ttf"
@@ -65,20 +65,21 @@ shadow(fg, (isz, isz), ipos, 64)
 fg.paste(ic, ipos, rounded_mask((isz, isz), 64))
 d = ImageDraw.Draw(fg)
 tx = 450
-d.text((tx, 130), "포토 캘린더", font=font(FONT_BOLD, 88), fill=WHITE)
-d.text((tx + 4, 250), "사진이 바로 보이는 캘린더", font=font(FONT_REG, 36), fill=LIGHT)
-d.text((tx + 4, 310), "일정 · 할 일 · 메모 · 사진을 한 곳에", font=font(FONT_REG, 26), fill=(190, 220, 250))
+d.text((tx, 130), "사다리타기", font=font(FONT_BOLD, 88), fill=WHITE)
+d.text((tx + 4, 250), "당첨 · 꽝 · 순서 · 벌칙, 공평하게", font=font(FONT_REG, 36), fill=LIGHT)
+d.text((tx + 4, 310), "2~10명 · 로그인 없음 · 결과 복사", font=font(FONT_REG, 26), fill=(178, 223, 215))
 fg.convert("RGB").save(os.path.join(STORE, "feature-graphic.png"))
 
 # ---------------------------------------------------------------- 스크린샷 1080x1920
 SW, SH = 1080, 1920
+# (파일, 윗줄, 아랫줄, 아래쪽 잘라낼 px — 배너가 있으면 340, 없으면 130)
 shots = [
-    ("month_four.png", "날짜를 누르지 않아도", "월 화면에서 사진이 보여요"),
-    ("month_all.png", "사진이 많은 날은", "칸이 길어지고 스크롤로 봐요"),
-    ("day_full.png", "일정 · 할 일 · 메모 · 사진", "하루를 한 화면에"),
-    ("settings.png", "하루당 사진 개수", "1장 · 4장 · 모두 중 선택"),
+    ("s_home.png", "이름과 결과만 적으면", "바로 사다리 타기", 340),
+    ("s_mid.png", "이름을 누르면", "사다리를 타고 내려가요", 340),
+    ("s_all.png", "모두 타기 한 번에", "결과가 한눈에", 340),
+    ("s_summary.png", "결과 정리 · 복사", "단톡방에 바로 공유", 130),
 ]
-for n, (fname, line1, line2) in enumerate(shots, start=1):
+for n, (fname, line1, line2, cut) in enumerate(shots, start=1):
     bg = gradient(SW, SH).convert("RGBA")
     d = ImageDraw.Draw(bg)
 
@@ -90,7 +91,7 @@ for n, (fname, line1, line2) in enumerate(shots, start=1):
 
     # 폰 스크린샷: 상태바(위 ~130px)와 테스트 배너·제스처 바(아래 ~290px) 잘라내고 둥근 모서리
     src = Image.open(os.path.join(RAW, fname)).convert("RGBA")
-    src = src.crop((0, 130, src.width, src.height - 340))
+    src = src.crop((0, 130, src.width, src.height - cut))
     ph = SH - 440
     pw = int(src.width * ph / src.height)
     src = src.resize((pw, ph), Image.LANCZOS)
