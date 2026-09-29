@@ -30,9 +30,17 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
   }
 
   Future<void> _load(int width) async {
-    // google_mobile_ads 9.x: getCurrentOrientationAnchoredAdaptiveBannerAdSize 는 deprecated
-    final size = await AdSize.getLargeAnchoredAdaptiveBannerAdSize(width);
-    if (size == null || !mounted) return;
+    // 화면 너비에 맞춘 표준 앵커 적응형 배너 (이 기기에서 411x64).
+    // getLargeAnchoredAdaptiveBannerAdSize 는 이 기기에서 128dp 로 너무 높아
+    // 화면을 많이 차지하므로 쓰지 않는다. (deprecated 지만 9.x 에서 동작하며,
+    // 없어지면 AdSize.banner 로 대체하면 된다.)
+    // ignore: deprecated_member_use
+    final AdSize size = await AdSize.getAnchoredAdaptiveBannerAdSize(
+          Orientation.portrait,
+          width,
+        ) ??
+        AdSize.banner;
+    if (!mounted) return;
     // 광고 요청보다 먼저 크기를 알 수 있으므로, 자리부터 잡아둔다.
     setState(() => _size = size);
 

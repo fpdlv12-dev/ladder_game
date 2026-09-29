@@ -206,7 +206,7 @@ class _SetupScreenState extends State<SetupScreen> {
         children: [
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+              padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
               children: [
                 _sectionHeader(
                   context,
@@ -305,7 +305,7 @@ class _SetupScreenState extends State<SetupScreen> {
                       ),
                   ],
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 10),
                 _fieldGrid(
                   controllers: _results,
                   hint: t.resultHint,
@@ -325,7 +325,7 @@ class _SetupScreenState extends State<SetupScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+            padding: const EdgeInsets.fromLTRB(16, 6, 16, 8),
             child: SizedBox(
               width: double.infinity,
               child: FilledButton.icon(
@@ -356,7 +356,7 @@ class _SetupScreenState extends State<SetupScreen> {
   Widget _sectionHeader(BuildContext context, String title, {Widget? trailing}) {
     final cs = Theme.of(context).colorScheme;
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 12, 0, 10),
+      padding: const EdgeInsets.fromLTRB(0, 10, 0, 8),
       child: Row(
         children: [
           Expanded(
@@ -386,7 +386,7 @@ class _SetupScreenState extends State<SetupScreen> {
       children: [
         for (var r = 0; r < rows; r++)
           Padding(
-            padding: const EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.only(bottom: 6),
             child: Row(
               children: [
                 for (var k = 0; k < 2; k++) ...[
