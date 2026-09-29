@@ -209,11 +209,23 @@ abstract class L10n {
   /// **'사다리 타기'**
   String get startGame;
 
-  /// No description provided for @resetNames.
+  /// No description provided for @resetAll.
   ///
   /// In ko, this message translates to:
-  /// **'이름 초기화'**
-  String get resetNames;
+  /// **'입력 초기화'**
+  String get resetAll;
+
+  /// No description provided for @resetDone.
+  ///
+  /// In ko, this message translates to:
+  /// **'이름과 결과를 초기화했어요'**
+  String get resetDone;
+
+  /// No description provided for @undo.
+  ///
+  /// In ko, this message translates to:
+  /// **'실행취소'**
+  String get undo;
 
   /// No description provided for @ladderTitle.
   ///
@@ -224,7 +236,7 @@ abstract class L10n {
   /// No description provided for @tapNameHint.
   ///
   /// In ko, this message translates to:
-  /// **'위쪽 이름을 누르면 사다리를 타요'**
+  /// **'타고 싶은 사람의 이름을 누르세요'**
   String get tapNameHint;
 
   /// No description provided for @revealAll.
@@ -233,22 +245,28 @@ abstract class L10n {
   /// **'모두 타기'**
   String get revealAll;
 
+  /// No description provided for @runRest.
+  ///
+  /// In ko, this message translates to:
+  /// **'남은 사람'**
+  String get runRest;
+
   /// No description provided for @showResults.
   ///
   /// In ko, this message translates to:
-  /// **'결과 보기'**
+  /// **'결과 미리보기'**
   String get showResults;
 
   /// No description provided for @hideResults.
   ///
   /// In ko, this message translates to:
-  /// **'결과 숨기기'**
+  /// **'결과 다시 숨기기'**
   String get hideResults;
 
   /// No description provided for @shuffle.
   ///
   /// In ko, this message translates to:
-  /// **'다시 섞기'**
+  /// **'사다리 다시 섞기'**
   String get shuffle;
 
   /// No description provided for @newGame.
@@ -262,6 +280,12 @@ abstract class L10n {
   /// In ko, this message translates to:
   /// **'결과'**
   String get resultSummary;
+
+  /// No description provided for @summaryButton.
+  ///
+  /// In ko, this message translates to:
+  /// **'결과 목록'**
+  String get summaryButton;
 
   /// No description provided for @copyResults.
   ///

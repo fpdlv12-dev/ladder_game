@@ -229,29 +229,39 @@ class _LadderScreenState extends State<LadderScreen>
     final allDone = _done.length == _n;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(t.ladderTitle),
-        actions: [
-          IconButton(
-            tooltip: _showAll ? t.hideResults : t.showResults,
-            icon: Icon(
-              _showAll ? Icons.visibility_off_outlined : Icons.visibility_outlined,
-            ),
-            onPressed: () => setState(() => _showAll = !_showAll),
-          ),
-          IconButton(
-            tooltip: t.shuffle,
-            icon: const Icon(Icons.shuffle),
-            onPressed: _shuffle,
-          ),
-        ],
-      ),
+      appBar: AppBar(title: Text(t.ladderTitle)),
       bottomNavigationBar: const BannerAdWidget(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(8, 4, 8, 8),
           child: Column(
             children: [
+              // 아이콘만 있으면 무슨 기능인지 알기 어려우므로 글자를 함께 둔다.
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                    child: _LabeledAction(
+                      icon: _showAll
+                          ? Icons.visibility_off_outlined
+                          : Icons.visibility_outlined,
+                      label: _showAll ? t.hideResults : t.showResults,
+                      onPressed: allDone
+                          ? null
+                          : () => setState(() => _showAll = !_showAll),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Flexible(
+                    child: _LabeledAction(
+                      icon: Icons.shuffle_rounded,
+                      label: t.shuffle,
+                      onPressed: _shuffle,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 4),
               Text(
                 allDone ? '' : t.tapNameHint,
                 style: Theme.of(
@@ -311,24 +321,36 @@ class _LadderScreenState extends State<LadderScreen>
                   Expanded(
                     child: OutlinedButton.icon(
                       onPressed: allDone || _runningAll ? null : _runAll,
-                      icon: const Icon(Icons.fast_forward_rounded),
-                      label: Text(t.revealAll),
+                      icon: const Icon(Icons.fast_forward_rounded, size: 18),
+                      label: Text(
+                        _done.isEmpty ? t.revealAll : t.runRest,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: FilledButton.tonalIcon(
                       onPressed: _showSummary,
-                      icon: const Icon(Icons.list_alt_rounded),
-                      label: Text(t.resultSummary),
+                      icon: const Icon(Icons.list_alt_rounded, size: 18),
+                      label: Text(
+                        t.summaryButton,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: FilledButton.icon(
                       onPressed: () => Navigator.of(context).pop(),
-                      icon: const Icon(Icons.replay_rounded),
-                      label: Text(t.newGame),
+                      icon: const Icon(Icons.replay_rounded, size: 18),
+                      label: Text(
+                        t.newGame,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ),
                 ],
@@ -361,29 +383,74 @@ class _NameButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 2),
       child: Material(
-        color: filled ? color : color.withValues(alpha: 0.15),
+        color: filled ? color : color.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(10),
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
           onTap: onTap,
           child: Container(
-            height: 44,
+            height: 52,
             alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(horizontal: 3),
-            child: Text(
-              label,
-              maxLines: 2,
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 12,
-                height: 1.15,
-                fontWeight: FontWeight.bold,
-                color: filled ? Colors.white : color,
-              ),
+            padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              // 아직 안 탄 사람은 테두리로 "누를 수 있는 버튼"임을 드러낸다.
+              border: filled ? null : Border.all(color: color, width: 1.5),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  done ? Icons.check_rounded : Icons.play_arrow_rounded,
+                  size: 15,
+                  color: filled ? Colors.white : color,
+                ),
+                Text(
+                  label,
+                  maxLines: 1,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 12,
+                    height: 1.15,
+                    fontWeight: FontWeight.bold,
+                    color: filled ? Colors.white : color,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// 아이콘 + 글자를 함께 보여주는 작은 동작 버튼 (결과 미리보기 / 다시 섞기).
+class _LabeledAction extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final VoidCallback? onPressed;
+  const _LabeledAction({
+    required this.icon,
+    required this.label,
+    this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton.icon(
+      onPressed: onPressed,
+      style: OutlinedButton.styleFrom(
+        visualDensity: VisualDensity.compact,
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+      ),
+      icon: Icon(icon, size: 17),
+      label: Text(
+        label,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: const TextStyle(fontSize: 13),
       ),
     );
   }

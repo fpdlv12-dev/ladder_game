@@ -69,31 +69,43 @@ class L10nJa extends L10n {
   String get startGame => 'あみだを引く';
 
   @override
-  String get resetNames => '名前をリセット';
+  String get resetAll => '入力をリセット';
+
+  @override
+  String get resetDone => '名前と結果をリセットしました';
+
+  @override
+  String get undo => '元に戻す';
 
   @override
   String get ladderTitle => 'あみだ';
 
   @override
-  String get tapNameHint => '上の名前をタップするとたどります';
+  String get tapNameHint => 'たどりたい人の名前をタップ';
 
   @override
   String get revealAll => '全員たどる';
 
   @override
-  String get showResults => '結果を表示';
+  String get runRest => '残り全員';
 
   @override
-  String get hideResults => '結果を隠す';
+  String get showResults => '結果を先に見る';
 
   @override
-  String get shuffle => '引き直す';
+  String get hideResults => '結果をまた隠す';
+
+  @override
+  String get shuffle => 'あみだを引き直す';
 
   @override
   String get newGame => '新しいゲーム';
 
   @override
   String get resultSummary => '結果';
+
+  @override
+  String get summaryButton => '結果一覧';
 
   @override
   String get copyResults => '結果をコピー';

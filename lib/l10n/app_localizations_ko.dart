@@ -69,31 +69,43 @@ class L10nKo extends L10n {
   String get startGame => '사다리 타기';
 
   @override
-  String get resetNames => '이름 초기화';
+  String get resetAll => '입력 초기화';
+
+  @override
+  String get resetDone => '이름과 결과를 초기화했어요';
+
+  @override
+  String get undo => '실행취소';
 
   @override
   String get ladderTitle => '사다리';
 
   @override
-  String get tapNameHint => '위쪽 이름을 누르면 사다리를 타요';
+  String get tapNameHint => '타고 싶은 사람의 이름을 누르세요';
 
   @override
   String get revealAll => '모두 타기';
 
   @override
-  String get showResults => '결과 보기';
+  String get runRest => '남은 사람';
 
   @override
-  String get hideResults => '결과 숨기기';
+  String get showResults => '결과 미리보기';
 
   @override
-  String get shuffle => '다시 섞기';
+  String get hideResults => '결과 다시 숨기기';
+
+  @override
+  String get shuffle => '사다리 다시 섞기';
 
   @override
   String get newGame => '새 게임';
 
   @override
   String get resultSummary => '결과';
+
+  @override
+  String get summaryButton => '결과 목록';
 
   @override
   String get copyResults => '결과 복사';

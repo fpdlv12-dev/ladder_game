@@ -98,12 +98,45 @@ class _SetupScreenState extends State<SetupScreen> {
     }
   }
 
-  void _resetNames() {
+  /// 이름을 비우고 결과를 프리셋 기본값으로 되돌린다. 실수로 눌렀을 때를 위해
+  /// 스낵바에서 되돌릴 수 있게 이전 값을 들고 있는다.
+  void _resetAll() {
+    final t = L10n.of(context);
+    final prevNames = [for (final c in _names) c.text];
+    final prevResults = [for (final c in _results) c.text];
+    final prevPreset = _preset;
+
     setState(() {
       for (final c in _names) {
         c.clear();
       }
+      if (_preset == ResultPreset.custom) {
+        for (final c in _results) {
+          c.clear();
+        }
+      } else {
+        _applyPreset(_preset);
+      }
     });
+
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          content: Text(t.resetDone),
+          action: SnackBarAction(
+            label: t.undo,
+            onPressed: () => setState(() {
+              // 되돌리는 사이 인원이 바뀌었을 수 있으니 짧은 쪽에 맞춘다.
+              for (var i = 0; i < _names.length && i < prevNames.length; i++) {
+                _names[i].text = prevNames[i];
+                _results[i].text = prevResults[i];
+              }
+              _preset = prevPreset;
+            }),
+          ),
+        ),
+      );
   }
 
   Future<void> _start() async {
@@ -180,12 +213,24 @@ class _SetupScreenState extends State<SetupScreen> {
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton.icon(
-                    onPressed: _resetNames,
-                    icon: const Icon(Icons.refresh, size: 18),
-                    label: Text(t.resetNames),
+                const SizedBox(height: 4),
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    onPressed: _resetAll,
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: cs.error,
+                      side: BorderSide(color: cs.error.withValues(alpha: 0.5)),
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                    ),
+                    icon: const Icon(Icons.refresh_rounded, size: 20),
+                    label: Text(
+                      t.resetAll,
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 4),

@@ -69,31 +69,43 @@ class L10nEn extends L10n {
   String get startGame => 'Climb the ladder';
 
   @override
-  String get resetNames => 'Reset names';
+  String get resetAll => 'Reset inputs';
+
+  @override
+  String get resetDone => 'Names and outcomes cleared';
+
+  @override
+  String get undo => 'Undo';
 
   @override
   String get ladderTitle => 'Ladder';
 
   @override
-  String get tapNameHint => 'Tap a name at the top to climb';
+  String get tapNameHint => 'Tap the name of whoever you want to run';
 
   @override
   String get revealAll => 'Run all';
 
   @override
-  String get showResults => 'Show outcomes';
+  String get runRest => 'The rest';
 
   @override
-  String get hideResults => 'Hide outcomes';
+  String get showResults => 'Peek at outcomes';
 
   @override
-  String get shuffle => 'Shuffle';
+  String get hideResults => 'Hide outcomes again';
+
+  @override
+  String get shuffle => 'Shuffle ladder';
 
   @override
   String get newGame => 'New game';
 
   @override
   String get resultSummary => 'Results';
+
+  @override
+  String get summaryButton => 'Result list';
 
   @override
   String get copyResults => 'Copy results';

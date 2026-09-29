@@ -69,31 +69,43 @@ class L10nZh extends L10n {
   String get startGame => '开始画鬼脚';
 
   @override
-  String get resetNames => '重置姓名';
+  String get resetAll => '重置输入';
+
+  @override
+  String get resetDone => '已重置姓名和结果';
+
+  @override
+  String get undo => '撤销';
 
   @override
   String get ladderTitle => '鬼脚图';
 
   @override
-  String get tapNameHint => '点击上方的名字开始走线';
+  String get tapNameHint => '点击想走线的人的名字';
 
   @override
   String get revealAll => '全部走完';
 
   @override
-  String get showResults => '显示结果';
+  String get runRest => '剩下全部';
 
   @override
-  String get hideResults => '隐藏结果';
+  String get showResults => '提前查看结果';
 
   @override
-  String get shuffle => '重新打乱';
+  String get hideResults => '重新隐藏结果';
+
+  @override
+  String get shuffle => '重新打乱鬼脚图';
 
   @override
   String get newGame => '新游戏';
 
   @override
   String get resultSummary => '结果';
+
+  @override
+  String get summaryButton => '结果列表';
 
   @override
   String get copyResults => '复制结果';
