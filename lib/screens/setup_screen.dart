@@ -25,6 +25,10 @@ class _SetupScreenState extends State<SetupScreen> {
   ResultPreset _preset = ResultPreset.winner;
   bool _restored = false;
 
+  /// 초기화 직전 값. 다음 입력이 있을 때까지 되돌릴 수 있게 들고 있는다.
+  /// (스낵바를 쓰면 하단 "사다리 타기" 버튼을 가리므로 화면 안에서 처리한다.)
+  _Snapshot? _undo;
+
   int get _count => _names.length;
 
   @override
@@ -61,6 +65,7 @@ class _SetupScreenState extends State<SetupScreen> {
     n = n.clamp(AppSettings.minPlayers, AppSettings.maxPlayers);
     if (n == _count) return;
     setState(() {
+      _undo = null;
       while (_names.length > n) {
         _names.removeLast().dispose();
         _results.removeLast().dispose();
@@ -98,13 +103,14 @@ class _SetupScreenState extends State<SetupScreen> {
     }
   }
 
-  /// 이름을 비우고 결과를 프리셋 기본값으로 되돌린다. 실수로 눌렀을 때를 위해
-  /// 스낵바에서 되돌릴 수 있게 이전 값을 들고 있는다.
+  /// 이름을 비우고 결과를 프리셋 기본값으로 되돌린다.
+  /// 실수로 눌렀을 때를 위해 같은 자리에 되돌리기 줄을 보여준다.
   void _resetAll() {
-    final t = L10n.of(context);
-    final prevNames = [for (final c in _names) c.text];
-    final prevResults = [for (final c in _results) c.text];
-    final prevPreset = _preset;
+    final snapshot = _Snapshot(
+      names: [for (final c in _names) c.text],
+      results: [for (final c in _results) c.text],
+      preset: _preset,
+    );
 
     setState(() {
       for (final c in _names) {
@@ -117,30 +123,32 @@ class _SetupScreenState extends State<SetupScreen> {
       } else {
         _applyPreset(_preset);
       }
+      _undo = snapshot;
     });
+  }
 
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          content: Text(t.resetDone),
-          action: SnackBarAction(
-            label: t.undo,
-            onPressed: () => setState(() {
-              // 되돌리는 사이 인원이 바뀌었을 수 있으니 짧은 쪽에 맞춘다.
-              for (var i = 0; i < _names.length && i < prevNames.length; i++) {
-                _names[i].text = prevNames[i];
-                _results[i].text = prevResults[i];
-              }
-              _preset = prevPreset;
-            }),
-          ),
-        ),
-      );
+  /// 초기화 이후 다른 입력을 하면 되돌리기 줄을 거둔다.
+  void _dismissUndo() {
+    if (_undo != null) setState(() => _undo = null);
+  }
+
+  void _applyUndo() {
+    final snapshot = _undo;
+    if (snapshot == null) return;
+    setState(() {
+      // 되돌리는 사이 인원이 바뀌었을 수 있으니 짧은 쪽에 맞춘다.
+      for (var i = 0; i < _names.length && i < snapshot.names.length; i++) {
+        _names[i].text = snapshot.names[i];
+        _results[i].text = snapshot.results[i];
+      }
+      _preset = snapshot.preset;
+      _undo = null;
+    });
   }
 
   Future<void> _start() async {
     FocusScope.of(context).unfocus();
+    _dismissUndo();
     final names = List.generate(_count, (i) {
       final v = _names[i].text.trim();
       return v.isEmpty ? '${i + 1}' : v;
@@ -200,6 +208,7 @@ class _SetupScreenState extends State<SetupScreen> {
                 _fieldGrid(
                   controllers: _names,
                   hint: t.nameHint,
+                  onChanged: _dismissUndo,
                   leading: (i) => CircleAvatar(
                     radius: 10,
                     backgroundColor: playerColor(i),
@@ -214,25 +223,59 @@ class _SetupScreenState extends State<SetupScreen> {
                   ),
                 ),
                 const SizedBox(height: 4),
-                SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton.icon(
-                    onPressed: _resetAll,
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: cs.error,
-                      side: BorderSide(color: cs.error.withValues(alpha: 0.5)),
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                    ),
-                    icon: const Icon(Icons.refresh_rounded, size: 20),
-                    label: Text(
-                      t.resetAll,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
+                _undo == null
+                    ? SizedBox(
+                        width: double.infinity,
+                        child: OutlinedButton.icon(
+                          onPressed: _resetAll,
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: cs.error,
+                            side: BorderSide(
+                              color: cs.error.withValues(alpha: 0.5),
+                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                          ),
+                          icon: const Icon(Icons.refresh_rounded, size: 20),
+                          label: Text(
+                            t.resetAll,
+                            style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      )
+                    : Container(
+                        padding: const EdgeInsets.fromLTRB(12, 4, 4, 4),
+                        decoration: BoxDecoration(
+                          color: cs.secondaryContainer,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.check_circle_outline,
+                              size: 18,
+                              color: cs.onSecondaryContainer,
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                t.resetDone,
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: cs.onSecondaryContainer,
+                                ),
+                              ),
+                            ),
+                            TextButton.icon(
+                              onPressed: _applyUndo,
+                              icon: const Icon(Icons.undo_rounded, size: 18),
+                              label: Text(t.undo),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ),
-                ),
                 const SizedBox(height: 4),
                 _sectionHeader(context, t.results),
                 Wrap(
@@ -243,7 +286,10 @@ class _SetupScreenState extends State<SetupScreen> {
                       ChoiceChip(
                         label: Text(_presetLabel(t, p)),
                         selected: _preset == p,
-                        onSelected: (_) => setState(() => _applyPreset(p)),
+                        onSelected: (_) => setState(() {
+                          _undo = null;
+                          _applyPreset(p);
+                        }),
                       ),
                   ],
                 ),
@@ -252,6 +298,7 @@ class _SetupScreenState extends State<SetupScreen> {
                   controllers: _results,
                   hint: t.resultHint,
                   onChanged: () {
+                    _dismissUndo();
                     if (_preset != ResultPreset.custom) {
                       setState(() => _preset = ResultPreset.custom);
                     }
@@ -420,4 +467,16 @@ class _CountStepper extends StatelessWidget {
       ),
     );
   }
+}
+
+/// 초기화 직전 입력값 (되돌리기용).
+class _Snapshot {
+  final List<String> names;
+  final List<String> results;
+  final ResultPreset preset;
+  const _Snapshot({
+    required this.names,
+    required this.results,
+    required this.preset,
+  });
 }
