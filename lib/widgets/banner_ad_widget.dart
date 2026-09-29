@@ -3,7 +3,11 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../ads/ad_ids.dart';
 
-/// 화면 하단에 붙이는 적응형 배너. 로드 전/실패 시에는 높이 0.
+/// 화면 하단에 붙이는 적응형 배너.
+///
+/// 광고가 로드되기 전에도 **같은 높이의 빈 자리와 하단 SafeArea 여백**을 차지한다.
+/// 그래야 광고가 1~2초 뒤 붙을 때 본문이 밀려 올라가지 않고, 로드 전에도 본문이
+/// 내비게이션 바에 가리지 않는다. (로드에 실패하면 그때 자리를 접는다.)
 class BannerAdWidget extends StatefulWidget {
   const BannerAdWidget({super.key});
 
@@ -13,6 +17,7 @@ class BannerAdWidget extends StatefulWidget {
 
 class _BannerAdWidgetState extends State<BannerAdWidget> {
   BannerAd? _ad;
+  AdSize? _size;
   bool _loaded = false;
 
   @override
@@ -28,6 +33,8 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
     // google_mobile_ads 9.x: getCurrentOrientationAnchoredAdaptiveBannerAdSize 는 deprecated
     final size = await AdSize.getLargeAnchoredAdaptiveBannerAdSize(width);
     if (size == null || !mounted) return;
+    // 광고 요청보다 먼저 크기를 알 수 있으므로, 자리부터 잡아둔다.
+    setState(() => _size = size);
 
     _ad = BannerAd(
       adUnitId: AdIds.banner,
@@ -41,6 +48,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
           debugPrint('Banner load failed: $err');
           ad.dispose();
           _ad = null;
+          if (mounted) setState(() => _size = null);
         },
       ),
     )..load();
@@ -55,13 +63,21 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
   @override
   Widget build(BuildContext context) {
     final ad = _ad;
-    if (ad == null || !_loaded) return const SizedBox.shrink();
+    final height = _size?.height.toDouble() ?? 0;
     return SafeArea(
       top: false,
       child: SizedBox(
-        width: ad.size.width.toDouble(),
-        height: ad.size.height.toDouble(),
-        child: AdWidget(ad: ad),
+        width: double.infinity,
+        height: height,
+        child: ad == null || !_loaded
+            ? null
+            : Center(
+                child: SizedBox(
+                  width: ad.size.width.toDouble(),
+                  height: ad.size.height.toDouble(),
+                  child: AdWidget(ad: ad),
+                ),
+              ),
       ),
     );
   }
