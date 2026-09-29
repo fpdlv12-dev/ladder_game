@@ -69,10 +69,16 @@ class L10nJa extends L10n {
   String get startGame => 'あみだを引く';
 
   @override
-  String get resetAll => '入力をリセット';
+  String get resetInputs => '入力だけリセット';
+
+  @override
+  String get resetEverything => '人数もリセット';
 
   @override
   String get resetDone => '名前と結果をリセットしました';
+
+  @override
+  String get resetAllDone => '人数も含めて初期状態に戻しました';
 
   @override
   String get undo => '元に戻す';

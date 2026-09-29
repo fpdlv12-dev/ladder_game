@@ -22,8 +22,10 @@
   "rankN": "{n}등",
   "@rankN": {"placeholders": {"n": {"type": "int"}}},
   "startGame": "사다리 타기",
-  "resetAll": "입력 초기화",
+  "resetInputs": "입력만 초기화",
+  "resetEverything": "인원까지 초기화",
   "resetDone": "이름과 결과를 초기화했어요",
+  "resetAllDone": "인원까지 처음 상태로 되돌렸어요",
   "undo": "실행취소",
 
   "ladderTitle": "사다리",

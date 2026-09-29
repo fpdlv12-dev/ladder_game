@@ -69,10 +69,16 @@ class L10nEn extends L10n {
   String get startGame => 'Climb the ladder';
 
   @override
-  String get resetAll => 'Reset inputs';
+  String get resetInputs => 'Clear inputs';
+
+  @override
+  String get resetEverything => 'Reset everything';
 
   @override
   String get resetDone => 'Names and outcomes cleared';
+
+  @override
+  String get resetAllDone => 'Everything reset to defaults';
 
   @override
   String get undo => 'Undo';

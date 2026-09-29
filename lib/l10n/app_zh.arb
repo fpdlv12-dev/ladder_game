@@ -22,8 +22,10 @@
   "rankN": "第{n}名",
   "@rankN": {"placeholders": {"n": {"type": "int"}}},
   "startGame": "开始画鬼脚",
-  "resetAll": "重置输入",
+  "resetInputs": "仅重置输入",
+  "resetEverything": "连人数一起重置",
   "resetDone": "已重置姓名和结果",
+  "resetAllDone": "已连人数一起恢复默认",
   "undo": "撤销",
 
   "ladderTitle": "鬼脚图",

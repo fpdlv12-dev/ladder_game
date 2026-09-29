@@ -209,17 +209,29 @@ abstract class L10n {
   /// **'사다리 타기'**
   String get startGame;
 
-  /// No description provided for @resetAll.
+  /// No description provided for @resetInputs.
   ///
   /// In ko, this message translates to:
-  /// **'입력 초기화'**
-  String get resetAll;
+  /// **'입력만 초기화'**
+  String get resetInputs;
+
+  /// No description provided for @resetEverything.
+  ///
+  /// In ko, this message translates to:
+  /// **'인원까지 초기화'**
+  String get resetEverything;
 
   /// No description provided for @resetDone.
   ///
   /// In ko, this message translates to:
   /// **'이름과 결과를 초기화했어요'**
   String get resetDone;
+
+  /// No description provided for @resetAllDone.
+  ///
+  /// In ko, this message translates to:
+  /// **'인원까지 처음 상태로 되돌렸어요'**
+  String get resetAllDone;
 
   /// No description provided for @undo.
   ///

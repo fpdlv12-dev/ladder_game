@@ -23,13 +23,16 @@ class AppSettings extends ChangeNotifier {
   static const _kOnboarded = 'onboarded';
   static const _kSpeed = 'anim_speed';
   static const _kReveal = 'reveal_results';
-  static const _kCount = 'player_count';
   static const _kNames = 'player_names';
   static const _kResults = 'results';
   static const _kPreset = 'result_preset';
 
   static const minPlayers = 2;
   static const maxPlayers = 10;
+
+  /// 앱을 켤 때마다 이 인원으로 시작한다. (지난번 인원은 기억하지 않는다 —
+  /// 한 번 10명으로 해 본 뒤 계속 10명으로 열리면 당황스러우므로.)
+  static const defaultPlayers = 4;
 
   final SharedPreferences _prefs;
   AppSettings(this._prefs);
@@ -56,10 +59,7 @@ class AppSettings extends ChangeNotifier {
 
   // ---------------------------------------------------------------- 마지막 게임 입력
 
-  int get playerCount =>
-      (_prefs.getInt(_kCount) ?? 4).clamp(minPlayers, maxPlayers);
-
-  /// 저장된 이름. 길이가 [playerCount] 와 다를 수 있으니 호출 쪽에서 맞춘다.
+  /// 저장된 이름. 길이가 [defaultPlayers] 와 다를 수 있으니 호출 쪽에서 맞춘다.
   List<String> get names => _prefs.getStringList(_kNames) ?? const [];
   List<String> get results => _prefs.getStringList(_kResults) ?? const [];
 
@@ -73,7 +73,6 @@ class AppSettings extends ChangeNotifier {
     required ResultPreset preset,
   }) async {
     await Future.wait([
-      _prefs.setInt(_kCount, names.length),
       _prefs.setStringList(_kNames, names),
       _prefs.setStringList(_kResults, results),
       _prefs.setInt(_kPreset, preset.index),

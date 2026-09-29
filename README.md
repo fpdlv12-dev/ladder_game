@@ -4,7 +4,8 @@
 Flutter, Android 대상. 한국어 · 영어 · 일본어 · 중국어(간체). AdMob 광고(배너 / 전면)로 수익화.
 
 기능:
-- 참가자 2~10명, 이름은 SharedPreferences 에 저장해 다음 실행 때 복원
+- 참가자 2~10명. **인원은 기억하지 않고 앱을 켤 때마다 기본 4명**으로 시작하며, 이름·결과는 SharedPreferences 에 저장해 복원
+- 초기화 두 가지: `인원까지 초기화`(인원·프리셋까지 기본값) / `입력만 초기화`(이름·결과 내용만). 둘 다 다음 입력이 있을 때까지 되돌리기 가능
 - 결과 프리셋: 당첨 1개 / 꽝 1개 / 순위 / 직접 입력 (결과 칸을 손으로 고치면 자동으로 "직접 입력")
 - 사다리: 세로줄 N, 가로줄 슬롯 `clamp(2N+6, 10, 26)` 개. 같은 슬롯에 이웃한 가로줄은 금지, 이웃한 줄 쌍마다 가로줄 최소 1개 보장
 - 이름 탭 → 경로 애니메이션(속도 3단계) → 도착한 결과 칸 공개. "모두 타기"는 순차 실행
@@ -19,15 +20,15 @@ lib/
   app_scope.dart                 설정을 트리에 내려주는 InheritedWidget
   ads/ad_ids.dart                AdMob 광고 단위 ID (디버그=테스트 ID, 릴리즈=실제 ID)  ← 출시 전 교체
   ads/ad_manager.dart            전면 광고 로드/노출 싱글톤 (하루 1회 게이트)
-  widgets/banner_ad_widget.dart  하단 적응형 배너 (Scaffold.bottomNavigationBar 슬롯)
+  widgets/banner_ad_widget.dart  하단 적응형 배너 (Scaffold.bottomNavigationBar 슬롯). 로드 전에도 같은 높이를 차지해 본문이 밀리지 않음
   widgets/ladder_painter.dart    ★ 사다리 + 경로 CustomPainter. LadderGeometry 로 위젯과 좌표 공유
   models/ladder.dart             ★ 사다리 생성(Ladder.random) 과 경로 추적(trace / mapping)
   util/player_colors.dart        참가자 10색
-  services/settings.dart         SharedPreferences (온보딩, 속도, 결과 표시, 마지막 이름·결과·프리셋)
+  services/settings.dart         SharedPreferences (온보딩, 속도, 결과 표시, 마지막 이름·결과·프리셋. 인원은 저장하지 않음)
   l10n/app_*.arb                 UI 문자열 (ko/en/ja/zh) → flutter gen-l10n 이 L10n 클래스 생성
   screens/onboarding_screen.dart 첫 실행: 소개 + 사다리 미리보기
-  screens/setup_screen.dart      홈. 인원·이름·결과 입력 → 전면 광고(하루 1회) → 사다리 화면
-  screens/ladder_screen.dart     사다리. 이름 버튼 / CustomPaint / 결과 칸 / 모두 타기·결과·새 게임
+  screens/setup_screen.dart      홈. 인원·이름·결과 입력, 초기화·되돌리기 → 전면 광고(하루 1회) → 사다리 화면
+  screens/ladder_screen.dart     사다리. 이름 버튼(탭하면 그 사람만 탐) / CustomPaint / 결과 칸 / 결과 미리보기·다시 섞기·모두 타기·결과 목록·새 게임
   screens/settings_screen.dart   설정 + 앱 정보 + 개인정보처리방침 링크
 test/ladder_test.dart            사다리 생성·추적 단위 테스트
 tool/

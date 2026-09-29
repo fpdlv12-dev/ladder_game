@@ -22,8 +22,10 @@
   "rankN": "{n}位",
   "@rankN": {"placeholders": {"n": {"type": "int"}}},
   "startGame": "あみだを引く",
-  "resetAll": "入力をリセット",
+  "resetInputs": "入力だけリセット",
+  "resetEverything": "人数もリセット",
   "resetDone": "名前と結果をリセットしました",
+  "resetAllDone": "人数も含めて初期状態に戻しました",
   "undo": "元に戻す",
 
   "ladderTitle": "あみだ",

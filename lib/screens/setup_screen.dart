@@ -40,7 +40,8 @@ class _SetupScreenState extends State<SetupScreen> {
     _preset = s.preset;
     final saved = s.names;
     final savedResults = s.results;
-    for (var i = 0; i < s.playerCount; i++) {
+    // 인원은 기억하지 않고 항상 기본값으로 시작한다. 이름·결과만 이어서 쓴다.
+    for (var i = 0; i < AppSettings.defaultPlayers; i++) {
       _names.add(TextEditingController(text: i < saved.length ? saved[i] : ''));
       _results.add(
         TextEditingController(
@@ -66,14 +67,7 @@ class _SetupScreenState extends State<SetupScreen> {
     if (n == _count) return;
     setState(() {
       _undo = null;
-      while (_names.length > n) {
-        _names.removeLast().dispose();
-        _results.removeLast().dispose();
-      }
-      while (_names.length < n) {
-        _names.add(TextEditingController());
-        _results.add(TextEditingController());
-      }
+      _setLength(n);
       if (_preset != ResultPreset.custom) _applyPreset(_preset);
     });
   }
@@ -103,16 +97,22 @@ class _SetupScreenState extends State<SetupScreen> {
     }
   }
 
-  /// 이름을 비우고 결과를 프리셋 기본값으로 되돌린다.
+  /// 초기화. [includeCount] 면 인원과 결과 프리셋까지 처음 상태로 되돌리고,
+  /// 아니면 인원·프리셋은 그대로 두고 이름과 결과 내용만 비운다.
   /// 실수로 눌렀을 때를 위해 같은 자리에 되돌리기 줄을 보여준다.
-  void _resetAll() {
+  void _reset({required bool includeCount}) {
     final snapshot = _Snapshot(
       names: [for (final c in _names) c.text],
       results: [for (final c in _results) c.text],
       preset: _preset,
+      full: includeCount,
     );
 
     setState(() {
+      if (includeCount) {
+        _setLength(AppSettings.defaultPlayers);
+        _preset = ResultPreset.winner;
+      }
       for (final c in _names) {
         c.clear();
       }
@@ -127,6 +127,18 @@ class _SetupScreenState extends State<SetupScreen> {
     });
   }
 
+  /// 참가자 칸 개수를 [n] 개로 맞춘다. (setState 안에서 호출할 것)
+  void _setLength(int n) {
+    while (_names.length > n) {
+      _names.removeLast().dispose();
+      _results.removeLast().dispose();
+    }
+    while (_names.length < n) {
+      _names.add(TextEditingController());
+      _results.add(TextEditingController());
+    }
+  }
+
   /// 초기화 이후 다른 입력을 하면 되돌리기 줄을 거둔다.
   void _dismissUndo() {
     if (_undo != null) setState(() => _undo = null);
@@ -136,8 +148,8 @@ class _SetupScreenState extends State<SetupScreen> {
     final snapshot = _undo;
     if (snapshot == null) return;
     setState(() {
-      // 되돌리는 사이 인원이 바뀌었을 수 있으니 짧은 쪽에 맞춘다.
-      for (var i = 0; i < _names.length && i < snapshot.names.length; i++) {
+      _setLength(snapshot.names.length);
+      for (var i = 0; i < snapshot.names.length; i++) {
         _names[i].text = snapshot.names[i];
         _results[i].text = snapshot.results[i];
       }
@@ -224,26 +236,26 @@ class _SetupScreenState extends State<SetupScreen> {
                 ),
                 const SizedBox(height: 4),
                 _undo == null
-                    ? SizedBox(
-                        width: double.infinity,
-                        child: OutlinedButton.icon(
-                          onPressed: _resetAll,
-                          style: OutlinedButton.styleFrom(
-                            foregroundColor: cs.error,
-                            side: BorderSide(
-                              color: cs.error.withValues(alpha: 0.5),
-                            ),
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                          ),
-                          icon: const Icon(Icons.refresh_rounded, size: 20),
-                          label: Text(
-                            t.resetAll,
-                            style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
+                    ? Row(
+                        children: [
+                          Expanded(
+                            child: _ResetButton(
+                              icon: Icons.restart_alt_rounded,
+                              label: t.resetEverything,
+                              color: cs.error,
+                              onPressed: () => _reset(includeCount: true),
                             ),
                           ),
-                        ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: _ResetButton(
+                              icon: Icons.backspace_outlined,
+                              label: t.resetInputs,
+                              color: cs.primary,
+                              onPressed: () => _reset(includeCount: false),
+                            ),
+                          ),
+                        ],
                       )
                     : Container(
                         padding: const EdgeInsets.fromLTRB(12, 4, 4, 4),
@@ -261,7 +273,7 @@ class _SetupScreenState extends State<SetupScreen> {
                             const SizedBox(width: 8),
                             Expanded(
                               child: Text(
-                                t.resetDone,
+                                _undo!.full ? t.resetAllDone : t.resetDone,
                                 style: TextStyle(
                                   fontSize: 13,
                                   color: cs.onSecondaryContainer,
@@ -469,14 +481,49 @@ class _CountStepper extends StatelessWidget {
   }
 }
 
-/// 초기화 직전 입력값 (되돌리기용).
+/// 초기화 직전 입력값 (되돌리기용). [full] 이면 인원까지 되돌리는 초기화였다.
 class _Snapshot {
   final List<String> names;
   final List<String> results;
   final ResultPreset preset;
+  final bool full;
   const _Snapshot({
     required this.names,
     required this.results,
     required this.preset,
+    required this.full,
   });
+}
+
+/// 테두리 + 아이콘 + 글자로 무엇을 지우는 버튼인지 드러내는 초기화 버튼.
+class _ResetButton extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final Color color;
+  final VoidCallback onPressed;
+  const _ResetButton({
+    required this.icon,
+    required this.label,
+    required this.color,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton.icon(
+      onPressed: onPressed,
+      style: OutlinedButton.styleFrom(
+        foregroundColor: color,
+        side: BorderSide(color: color.withValues(alpha: 0.5)),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 6),
+      ),
+      icon: Icon(icon, size: 18),
+      label: Text(
+        label,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+      ),
+    );
+  }
 }

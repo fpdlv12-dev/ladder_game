@@ -22,8 +22,10 @@
   "rankN": "#{n}",
   "@rankN": {"placeholders": {"n": {"type": "int"}}},
   "startGame": "Climb the ladder",
-  "resetAll": "Reset inputs",
+  "resetInputs": "Clear inputs",
+  "resetEverything": "Reset everything",
   "resetDone": "Names and outcomes cleared",
+  "resetAllDone": "Everything reset to defaults",
   "undo": "Undo",
 
   "ladderTitle": "Ladder",

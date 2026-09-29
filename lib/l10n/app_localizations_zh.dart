@@ -69,10 +69,16 @@ class L10nZh extends L10n {
   String get startGame => '开始画鬼脚';
 
   @override
-  String get resetAll => '重置输入';
+  String get resetInputs => '仅重置输入';
+
+  @override
+  String get resetEverything => '连人数一起重置';
 
   @override
   String get resetDone => '已重置姓名和结果';
+
+  @override
+  String get resetAllDone => '已连人数一起恢复默认';
 
   @override
   String get undo => '撤销';

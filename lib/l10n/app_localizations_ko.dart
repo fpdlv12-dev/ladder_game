@@ -69,10 +69,16 @@ class L10nKo extends L10n {
   String get startGame => '사다리 타기';
 
   @override
-  String get resetAll => '입력 초기화';
+  String get resetInputs => '입력만 초기화';
+
+  @override
+  String get resetEverything => '인원까지 초기화';
 
   @override
   String get resetDone => '이름과 결과를 초기화했어요';
+
+  @override
+  String get resetAllDone => '인원까지 처음 상태로 되돌렸어요';
 
   @override
   String get undo => '실행취소';
